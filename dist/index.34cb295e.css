@@ -1,0 +1,14 @@
+*{
+    box-sizing: border-box;
+}
+
+.ul-list{
+    margin-top: 1px;
+    display: grid;
+    row-gap: 50px;
+}
+.imagen {
+    width: 22px;
+    height: 22px;
+}
+/*# sourceMappingURL=index.34cb295e.css.map */

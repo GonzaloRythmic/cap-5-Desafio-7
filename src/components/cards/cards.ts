@@ -14,12 +14,17 @@ class CardComponent extends HTMLElement {
             background-color:#FFF599;
         }
     `;
+    
     this.shadow.appendChild(style);
     }
     render (){
+        const trashImage = require("url:../../components/imagen/delete1.png");
         this.shadow.innerHTML = `
             <div class = "card">
             ${this.innerHTML}
+            </div>
+            <div>
+                <img src="src="${trashImage}"" alt="">
             </div>
         `
     }

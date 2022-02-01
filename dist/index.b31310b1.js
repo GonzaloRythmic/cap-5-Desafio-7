@@ -567,7 +567,7 @@ class CardComponent extends HTMLElement {
         this.shadow.appendChild(style);
     }
     render() {
-        this.shadow.innerHTML = `\n            <div class = "card">\n            ${this.innerHTML}\n            </div>\n        `;
+        this.shadow.innerHTML = `\n            <div class = "card">\n            ${this.innerHTML}\n            <a href="./delete 1.png"></a>\n            </div>\n        `;
     }
 }
 customElements.define("card-component", CardComponent);
@@ -603,10 +603,10 @@ function initPage(elemento) {
     const tasks = currentState.tasks;
     console.log("soy los tasks", tasks);
     const listaTasks = tasks.map((t)=>{
-        t.title, t.completed;
+        return `<my-todo-item title = "${t.title}" checked = "${t.completed}">hola</my-todo-item>`;
     });
     console.log("soy la lista de tasks", listaTasks);
-    div.innerHTML = `\n    <header-component>Header</header-component>\n    <my-text class = "title" tag ="h1">Mis pendientes</my-text>\n    <ul>\n      ${listaTasks.join("")}\n    </ul>\n    `;
+    div.innerHTML = `\n    <header-component>Header</header-component>\n    <my-text class = "title" tag ="h1">Mis pendientes</my-text>\n    <ul class = "ul-list">\n      ${listaTasks.join("")}\n    </ul>\n    `;
     return div;
 }
 
