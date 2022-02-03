@@ -13,18 +13,22 @@ class CardComponent extends HTMLElement {
             padding: 22px 13px;
             background-color:#FFF599;
         }
+        .trash-img {
+            display: flex;
+            flex-direction: row-reverse;
+        }
     `;
     
     this.shadow.appendChild(style);
     }
     render (){
-        const trashImage = require("url:../../components/imagen/delete1.png");
+        const trashImage = require("../imagen/delete1.png");
         this.shadow.innerHTML = `
             <div class = "card">
             ${this.innerHTML}
+            <div class = "trash-img">
+                <img src=${trashImage} alt="">
             </div>
-            <div>
-                <img src="src="${trashImage}"" alt="">
             </div>
         `
     }

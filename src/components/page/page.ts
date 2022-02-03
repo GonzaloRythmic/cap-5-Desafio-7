@@ -13,6 +13,7 @@ export function initPage(elemento?) {
   div.innerHTML = `
     <header-component>Header</header-component>
     <my-text class = "title" tag ="h1">Mis pendientes</my-text>
+    <input-component></input-component>
     <ul class = "ul-list">
       ${listaTasks.join("")}
     </ul>

@@ -523,17 +523,18 @@ var _text = require("./components/text/text");
 var _header = require("./components/header/header");
 var _cards = require("./components/cards/cards");
 var _todoitem = require("./components/todo-item/todoitem");
+var _input = require("./components/input/input");
 var _router = require("./router");
 var _page = require("./components/page/page");
 function main() {
     const root = document.querySelector(".root");
     const page = _page.initPage();
-    // formInput();
     _router.initRouter(root, page);
+    _input.formInput();
 }
 main();
 
-},{"./components/text/text":"h13bq","./components/header/header":"4f7AX","./components/cards/cards":"2wcdE","./components/todo-item/todoitem":"aA2zn","./router":"4QFWt","./components/page/page":"2taTM"}],"h13bq":[function(require,module,exports) {
+},{"./components/text/text":"h13bq","./components/header/header":"4f7AX","./components/cards/cards":"2wcdE","./components/todo-item/todoitem":"aA2zn","./router":"4QFWt","./components/page/page":"2taTM","./components/input/input":"fIx3g"}],"h13bq":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // export function initText () {  >>> estaría exportando la funcion entera. 
@@ -652,25 +653,29 @@ class CardComponent extends HTMLElement {
             padding: 22px 13px;
             background-color:#FFF599;
         }
+        .trash-img {
+            display: flex;
+            flex-direction: row-reverse;
+        }
     `;
         this.shadow.appendChild(style);
     }
     render() {
-        const trashImage = require("url:../../components/imagen/delete1.png");
+        const trashImage = require("../imagen/delete1.png");
         this.shadow.innerHTML = `
             <div class = "card">
             ${this.innerHTML}
+            <div class = "trash-img">
+                <img src=${trashImage} alt="">
             </div>
-            <div>
-                <img src="src="${trashImage}"" alt="">
             </div>
         `;
     }
 }
 customElements.define("card-component", CardComponent);
 
-},{"url:../../components/imagen/delete1.png":"isNY2"}],"isNY2":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "delete1.c03d3de5.png" + "?" + Date.now();
+},{"../imagen/delete1.png":"iII1C"}],"iII1C":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "delete1.972ea91a.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -764,6 +769,7 @@ function initPage(elemento) {
     div.innerHTML = `
     <header-component>Header</header-component>
     <my-text class = "title" tag ="h1">Mis pendientes</my-text>
+    <input-component></input-component>
     <ul class = "ul-list">
       ${listaTasks.join("")}
     </ul>
@@ -813,6 +819,64 @@ const state = {
         this.setState(currentState);
     }
 };
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fIx3g":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "formInput", ()=>formInput
+);
+function formInput() {
+    class Input extends HTMLElement {
+        constructor(){
+            super();
+            this.render();
+        }
+        render() {
+            const div = document.createElement("div");
+            const shadow = this.attachShadow({
+                mode: "open"
+            });
+            const style = document.createElement("style");
+            div.className = "input";
+            style.innerHTML = `
+                *{
+                    box-sizing: border-box;
+                }
+                .input { 
+                    width: 100% ;
+                    height: 55px;
+                    padding: 3px;
+                    border-radius: 4px;
+                }
+                .label {
+                    font-family: "Roboto";
+                    font-size: 18px;
+                }
+                .button {
+                    background-color: #9CBBE9;
+                    max-width: 100%;
+                    font-family: "Roboto";
+                    font-size: 22px;
+                    margin-top: 12px;
+                }
+                `;
+            div.innerHTML = `
+           <label class = "label">Nuevo pendiente</label>
+           <input class = "input" type = text placeholder = "Ingrese nueva tarea"/>
+           <button class = "button">Agregar</button> `;
+            shadow.appendChild(div);
+            shadow.appendChild(style);
+            const butEl = shadow.querySelector("button");
+            butEl.addEventListener("submit", (e)=>{
+                e.preventDefault();
+                const f = e.target;
+            // state.addItem(f.text.value);
+            });
+            console.log(butEl);
+        }
+    }
+    customElements.define("input-component", Input);
+}
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["8wcER","h7u1C"], "h7u1C", "parcelRequire1a3d")
 

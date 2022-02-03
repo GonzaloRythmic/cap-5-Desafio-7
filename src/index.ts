@@ -10,8 +10,8 @@ function main () {
     
     const root = document.querySelector(".root");
     const page = initPage();
-    // formInput();
     initRouter(root, page)
+    formInput();
 }
 
 main ();

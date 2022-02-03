@@ -37,10 +37,9 @@ export function formInput () {
             
             div.innerHTML = `
            <label class = "label">Nuevo pendiente</label>
-           <input class = "input" type = text class = "input" placeholder = "Ingrese nueva tarea"/>
-
-           
+           <input class = "input" type = text placeholder = "Ingrese nueva tarea"/>
            <button class = "button">Agregar</button> `;
+
 
            
            shadow.appendChild(div);
