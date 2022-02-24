@@ -720,25 +720,28 @@ customElements.define("my-todo-item", class extends HTMLElement {
             mode: "open"
         });
         this.title = this.getAttribute("title") || "";
-        this.checked = JSON.parse(this.getAttribute("checked")) || "";
+        this.checked = JSON.parse(this.getAttribute("checked")) || "false";
+        console.log(this.checked);
+        this.todoId = this.getAttribute("todo-id");
         const style = document.createElement("style");
         style.innerHTML = `
             .root {
                 font-size: 18px;
             }
+
+            
             `;
         this.shadow.appendChild(style);
         this.render();
     }
     render() {
         this.shadow.innerHTML = `
-                <card-component>
-                    <h4>${this.title}</h4>
-                    <div>
-                    <input type="checkbox" ${this.checked ? "checked" : ""}/>
-                    </div>
-                </card-component>
-            `;
+            <div class="todo-item">
+                <p class="todo-item__text ${this.checked ? "checked-text" : ""}">${this.title}</p>
+                <div class="todo-item__interactive">
+                    <input type="checkbox" ${this.checked ? "checked" : ""} class="interactive-checkbox" />
+                </div>
+            </div>`;
     }
 });
 
@@ -754,16 +757,18 @@ function initRouter(container, page) {
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2taTM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+// import { formInput } from "../../components/input/input"
 parcelHelpers.export(exports, "initPage", ()=>initPage
 );
 var _state = require("../../state");
 function initPage(elemento) {
     const div = document.createElement("div");
+    _state.state.init;
     const currentState = _state.state.getState();
     const tasks = currentState.tasks;
     console.log("soy los tasks", tasks);
     const listaTasks = tasks.map((t)=>{
-        return `<my-todo-item title = "${t.title}" checked = "${t.completed}">hola</my-todo-item>`;
+        return `<my-todo-item title = ${t.title} checked = ${t.checked}></my-todo-item>`;
     });
     console.log("soy la lista de tasks", listaTasks);
     div.innerHTML = `
@@ -791,23 +796,25 @@ parcelHelpers.export(exports, "state", ()=>state
 ;
 const state = {
     data: {
-        tasks: [
-            {
-                title: "primer item",
-                completed: false
-            },
-            {
-                title: "segundo item",
-                completed: true
-            }
-        ]
+        tasks: []
     },
     listener: [],
+    // Initializer
+    init () {
+        // Get the local data
+        const localData = JSON.parse(localStorage.getItem("saved-tasks"));
+        // If localData returns "null", do nothing
+        if (!localData) return;
+        else this.setState(localData);
+    },
     getState () {
         return this.data;
     },
     setState (newState) {
         this.data = newState;
+        // Save the changes made to the state
+        localStorage.setItem("saved-tasks", JSON.stringify(this.data));
+        for (const cbFunction of this.listener)cbFunction();
     },
     suscribe (callback) {
         this.listener.push(callback); //agrega lo que tiene que hacer el listener. 
@@ -815,7 +822,25 @@ const state = {
     },
     addItem (item) {
         const currentState = this.getState();
-        currentState.list.push(item);
+        currentState.tasks.push(item);
+        this.setState(currentState);
+        console.log("soy el estate y me agregaron esto:", item);
+    },
+    // Only active/existing tasks getter
+    getActiveTasks () {
+        const currentState = this.getState();
+        return currentState.tasks.filter((t)=>!t.deleted
+        );
+    },
+    // Delete task method
+    deleteTask (taskId) {
+        // Get the current state
+        const currentState = this.getState();
+        // Find the task that needs to be deleted
+        const foundTask = currentState.tasks.find((t)=>t.id == parseInt(taskId)
+        );
+        // Change the task deleted property
+        foundTask.deleted = true;
         this.setState(currentState);
     }
 };
@@ -825,6 +850,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "formInput", ()=>formInput
 );
+var _state = require("../../state");
 function formInput() {
     class Input extends HTMLElement {
         constructor(){
@@ -837,7 +863,6 @@ function formInput() {
                 mode: "open"
             });
             const style = document.createElement("style");
-            div.className = "input";
             style.innerHTML = `
                 *{
                     box-sizing: border-box;
@@ -867,17 +892,17 @@ function formInput() {
             shadow.appendChild(div);
             shadow.appendChild(style);
             const butEl = shadow.querySelector("button");
-            butEl.addEventListener("submit", (e)=>{
+            butEl.addEventListener("click", (e)=>{
                 e.preventDefault();
-                const f = e.target;
-            // state.addItem(f.text.value);
+                const inputEl = shadow.querySelector("input");
+                const value = inputEl.value;
+                _state.state.addItem(value);
             });
-            console.log(butEl);
         }
     }
     customElements.define("input-component", Input);
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["8wcER","h7u1C"], "h7u1C", "parcelRequire1a3d")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../../state":"1Yeju"}]},["8wcER","h7u1C"], "h7u1C", "parcelRequire1a3d")
 
 //# sourceMappingURL=index.b71e74eb.js.map

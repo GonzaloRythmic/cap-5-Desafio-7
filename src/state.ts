@@ -1,14 +1,32 @@
 const state = {
     data: {
-        tasks:[{title: "primer item", completed: false},
-        {title: "segundo item", completed: true}]
+        tasks:[]
     },
     listener: [], 
+    // Initializer
+    init() {
+        // Get the local data
+        const localData = JSON.parse(localStorage.getItem("saved-tasks"));
+
+        // If localData returns "null", do nothing
+        if (!localData) {
+            return;
+        } else {
+            this.setState(localData);
+        }
+    },
     getState(){
         return this.data;
     },
-    setState(newState){
+    setState(newState) {
         this.data = newState;
+
+        // Save the changes made to the state
+        localStorage.setItem("saved-tasks", JSON.stringify(this.data));
+
+        for (const cbFunction of this.listener) {
+            cbFunction();
+        }
     },
     suscribe(callback: (any)=> any ){   //recibe una función (callback)
         this.listener.push(callback);   //agrega lo que tiene que hacer el listener. 
@@ -18,9 +36,32 @@ const state = {
     },
     addItem(item){
         const currentState = this.getState();
-        currentState.list.push(item);
+        currentState.tasks.push(item);
         this.setState(currentState);
-    }   
+        console.log("soy el estate y me agregaron esto:", item)
+    },
+    // Only active/existing tasks getter
+    getActiveTasks() {
+        const currentState = this.getState();
+
+        return currentState.tasks.filter((t) => !t.deleted);
+    },   
+
+    // Delete task method
+    deleteTask(taskId: string) {
+        // Get the current state
+        const currentState = this.getState();
+
+        // Find the task that needs to be deleted
+        const foundTask = currentState.tasks.find(
+            (t) => t.id == parseInt(taskId)
+        );
+
+        // Change the task deleted property
+        foundTask.deleted = true;
+
+        this.setState(currentState);
+    },
 };
 
 export {state};

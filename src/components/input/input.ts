@@ -1,5 +1,6 @@
 import { state } from "../../state";
 
+
 export function formInput () {
     class Input extends HTMLElement {
         constructor (){
@@ -10,8 +11,7 @@ export function formInput () {
             const div = document.createElement("div");
             const shadow = this.attachShadow({ mode: "open"});
             const style = document.createElement("style");
-            div.className = "input"
-    
+        
             style.innerHTML = `
                 *{
                     box-sizing: border-box;
@@ -46,15 +46,17 @@ export function formInput () {
            shadow.appendChild(style);
            
            const butEl = shadow.querySelector("button");
-           butEl.addEventListener("submit", (e)=>{
-            e.preventDefault();
-            const f = e.target as any;
-            // state.addItem(f.text.value);
+           butEl.addEventListener("click", (e)=>{
+               e.preventDefault();
+               const inputEl = shadow.querySelector("input");
+               const value = inputEl.value;
+               state.addItem(value);
            })
-           console.log(butEl);
+           
 
         }
     }
         customElements.define ("input-component", Input);
-    
+
+        
 }
