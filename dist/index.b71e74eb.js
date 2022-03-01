@@ -652,6 +652,7 @@ class CardComponent extends HTMLElement {
             border-radius: 4px;
             padding: 22px 13px;
             background-color:#FFF599;
+            
         }
         .trash-img {
             display: flex;
@@ -716,36 +717,53 @@ exports.getOrigin = getOrigin;
 customElements.define("my-todo-item", class extends HTMLElement {
     constructor(){
         super();
+        this.checked = false;
         this.shadow = this.attachShadow({
             mode: "open"
         });
         this.title = this.getAttribute("title") || "";
-        this.checked = JSON.parse(this.getAttribute("checked")) || "false";
-        console.log(this.checked);
+        this.checked = this.hasAttribute("checked");
         this.todoId = this.getAttribute("todo-id");
         const style = document.createElement("style");
         style.innerHTML = `
             .root {
-                font-size: 18px;
-            }
 
-            
+            }
+           
+            .checkbox {
+                display: flex;
+                flex-direction: row-reverse;
+            }
+            .custom-text.checked{
+                font-family: "Roboto";
+                font-size: 18px;
+                text-decoration: 
+
+            }
             `;
         this.shadow.appendChild(style);
         this.render();
     }
     render() {
-        this.shadow.innerHTML = `
-            <div class="todo-item">
-                <p class="todo-item__text ${this.checked ? "checked-text" : ""}">${this.title}</p>
-                <div class="todo-item__interactive">
-                    <input type="checkbox" ${this.checked ? "checked" : ""} class="interactive-checkbox" />
+        const trashImage = require("../imagen/delete1.png");
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <div class = "root">
+                <div class="custom-text ${this.checked ? "checked" : ""}">
+                ${this.title}
+                </div>
+                <div class = "checkbox">
+                <input type= "checkbox" ${this.checked ? "checked" : ""}> 
+                </div>
+                <div class = "trash-img">
+                <img src=${trashImage} alt="">
                 </div>
             </div>`;
+        console.log(div.querySelector(".root"));
     }
 });
 
-},{}],"4QFWt":[function(require,module,exports) {
+},{"../imagen/delete1.png":"iII1C"}],"4QFWt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initRouter", ()=>initRouter
@@ -763,22 +781,35 @@ parcelHelpers.export(exports, "initPage", ()=>initPage
 var _state = require("../../state");
 function initPage(elemento) {
     const div = document.createElement("div");
-    _state.state.init;
-    const currentState = _state.state.getState();
-    const tasks = currentState.tasks;
-    console.log("soy los tasks", tasks);
-    const listaTasks = tasks.map((t)=>{
-        return `<my-todo-item title = ${t.title} checked = ${t.checked}></my-todo-item>`;
-    });
-    console.log("soy la lista de tasks", listaTasks);
+    const items = _state.state.getActiveTasks();
+    const style = document.createElement("style");
+    style.innerHTML = `
+  .lista {
+    border-radius: 4px;
+    padding: 22px 13px;
+    background-color:#FFF599;
+    font-size: 18px;
+    }
+  `;
     div.innerHTML = `
-    <header-component>Header</header-component>
-    <my-text class = "title" tag ="h1">Mis pendientes</my-text>
-    <input-component></input-component>
-    <ul class = "ul-list">
-      ${listaTasks.join("")}
-    </ul>
-    `;
+  <header-component>Header</header-component>
+  <my-text class = "title" tag ="h1">Mis pendientes</my-text>
+  <input-component></input-component>
+  <ul class="lista"></ul>
+  `;
+    div.appendChild(style);
+    function createTasks(task) {
+        const listaDeItemsHtml = task.map((item)=>{
+            return `<my-todo-item title="${item.title}" checked= ${item.completed ? "checked" : ""} ></my-todo-item> `;
+        });
+        const listaEl = div.querySelector(".lista");
+        listaEl.innerHTML = listaDeItemsHtml.join("");
+        console.log(listaEl);
+    }
+    createTasks(items);
+    _state.state.suscribe(()=>{
+        createTasks(items);
+    });
     return div;
 }
 
@@ -796,7 +827,21 @@ parcelHelpers.export(exports, "state", ()=>state
 ;
 const state = {
     data: {
-        tasks: []
+        tasks: [
+            {
+                title: "Tarea 1",
+                completed: true
+            },
+            {
+                title: "Tarea 2",
+                completed: false
+            },
+            {
+                title: "Tarea 3",
+                completed: false,
+                deleted: true
+            }
+        ]
     },
     listener: [],
     // Initializer
@@ -814,17 +859,19 @@ const state = {
         this.data = newState;
         // Save the changes made to the state
         localStorage.setItem("saved-tasks", JSON.stringify(this.data));
-        for (const cbFunction of this.listener)cbFunction();
+        for (const cbFunction of this.listener)cbFunction(newState);
     },
     suscribe (callback) {
         this.listener.push(callback); //agrega lo que tiene que hacer el listener. 
         for (const cb of this.listener)cb();
     },
-    addItem (item) {
+    addItem (title) {
         const currentState = this.getState();
-        currentState.tasks.push(item);
+        currentState.tasks.push({
+            title: title
+        });
         this.setState(currentState);
-        console.log("soy el estate y me agregaron esto:", item);
+        console.log("soy el estate y me agregaron esto:", currentState);
     },
     // Only active/existing tasks getter
     getActiveTasks () {
@@ -896,7 +943,7 @@ function formInput() {
                 e.preventDefault();
                 const inputEl = shadow.querySelector("input");
                 const value = inputEl.value;
-                _state.state.addItem(value);
+                _state.state.addItem(value + Math.random());
             });
         }
     }

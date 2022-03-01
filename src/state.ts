@@ -1,6 +1,9 @@
 const state = {
     data: {
-        tasks:[]
+        tasks:[ {title: "Tarea 1" , completed: true },
+                {title: "Tarea 2" , completed: false },
+                {title: "Tarea 3" , completed: false,  deleted: true }
+        ],
     },
     listener: [], 
     // Initializer
@@ -25,7 +28,7 @@ const state = {
         localStorage.setItem("saved-tasks", JSON.stringify(this.data));
 
         for (const cbFunction of this.listener) {
-            cbFunction();
+            cbFunction(newState);
         }
     },
     suscribe(callback: (any)=> any ){   //recibe una función (callback)
@@ -34,11 +37,11 @@ const state = {
             cb();
         }
     },
-    addItem(item){
+    addItem(title){
         const currentState = this.getState();
-        currentState.tasks.push(item);
+        currentState.tasks.push({title: title});
         this.setState(currentState);
-        console.log("soy el estate y me agregaron esto:", item)
+        console.log("soy el estate y me agregaron esto:",currentState);
     },
     // Only active/existing tasks getter
     getActiveTasks() {

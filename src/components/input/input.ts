@@ -50,7 +50,7 @@ export function formInput () {
                e.preventDefault();
                const inputEl = shadow.querySelector("input");
                const value = inputEl.value;
-               state.addItem(value);
+               state.addItem(value + Math.random());
            })
            
 

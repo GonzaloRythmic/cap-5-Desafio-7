@@ -3,25 +3,44 @@ import { state } from "../../state";
 
 
 export function initPage(elemento?) {
-  const div = document.createElement("div");
-  state.init;
-  const currentState = state.getState();
-  const tasks = currentState.tasks;
-  console.log("soy los tasks", tasks);
-  const listaTasks = tasks.map((t)=>{
-   return  `<my-todo-item title = ${t.title} checked = ${t.checked}></my-todo-item>`
-  })
-  console.log("soy la lista de tasks" , listaTasks);
-  
+  const div = document.createElement ("div");
 
+  const items = state.getActiveTasks();
+
+  const style = document.createElement("style");
+  style.innerHTML = `
+  .lista {
+    border-radius: 4px;
+    padding: 22px 13px;
+    background-color:#FFF599;
+    font-size: 18px;
+    }
+  `
+  
   div.innerHTML = `
-    <header-component>Header</header-component>
-    <my-text class = "title" tag ="h1">Mis pendientes</my-text>
-    <input-component></input-component>
-    <ul class = "ul-list">
-      ${listaTasks.join("")}
-    </ul>
-    `;
+  <header-component>Header</header-component>
+  <my-text class = "title" tag ="h1">Mis pendientes</my-text>
+  <input-component></input-component>
+  <ul class="lista"></ul>
+  `;
+ 
+  
+  div.appendChild(style);
+  
+  function createTasks (task){
+    const listaDeItemsHtml = task.map((item)=>{
+      return `<my-todo-item title="${item.title}" checked= ${item.completed ? "checked" : ""} ></my-todo-item> `
+    });
+    const listaEl = div.querySelector(".lista");
+    listaEl.innerHTML = listaDeItemsHtml.join("");
+    console.log(listaEl);
+  }
+
+  createTasks (items);
+  
+  
+  state.suscribe(()=>{createTasks(items)});
+  
 
   return div
 }

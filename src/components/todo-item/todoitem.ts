@@ -4,24 +4,32 @@ customElements.define(
     class extends HTMLElement {
         shadow: ShadowRoot;
         title: string;
-        checked: boolean;
+        checked: boolean = false;
         todoId: string;
 
         constructor() {
             super();
             this.shadow = this.attachShadow({mode: "open"});
             this.title = this.getAttribute("title") || "";
-            this.checked = JSON.parse(this.getAttribute("checked")) || "false";
-            console.log(this.checked)
+            this.checked = this.hasAttribute("checked");
             this.todoId = this.getAttribute("todo-id");
-
+            
             const style = document.createElement("style");
             style.innerHTML = `
             .root {
-                font-size: 18px;
-            }
 
-            
+            }
+           
+            .checkbox {
+                display: flex;
+                flex-direction: row-reverse;
+            }
+            .custom-text.checked{
+                font-family: "Roboto";
+                font-size: 18px;
+                text-decoration: 
+
+            }
             `;
             this.shadow.appendChild(style);
             this.render();
@@ -29,17 +37,21 @@ customElements.define(
         }
 
         render() {
-            this.shadow.innerHTML = `
-            <div class="todo-item">
-                <p class="todo-item__text ${
-                    this.checked ? "checked-text" : ""
-                }">${this.title}</p>
-                <div class="todo-item__interactive">
-                    <input type="checkbox" ${
-                        this.checked ? "checked" : ""
-                    } class="interactive-checkbox" />
+            const trashImage = require("../imagen/delete1.png");
+            const div = document.createElement("div")
+            div.innerHTML = `
+            <div class = "root">
+                <div class="custom-text ${this.checked ? "checked" : ""}">
+                ${this.title}
+                </div>
+                <div class = "checkbox">
+                <input type= "checkbox" ${this.checked ? "checked" : ""}> 
+                </div>
+                <div class = "trash-img">
+                <img src=${trashImage} alt="">
                 </div>
             </div>`
+            console.log(div.querySelector(".root"))
         ;
         }
     }
