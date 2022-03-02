@@ -1,5 +1,5 @@
 import { state } from "../../state";
-
+import { initPage } from "../page/page";
 
 export function formInput () {
     class Input extends HTMLElement {
@@ -51,6 +51,20 @@ export function formInput () {
                const inputEl = shadow.querySelector("input");
                const value = inputEl.value;
                state.addItem(value + Math.random());
+
+               const items = state.getActiveTasks();
+               function createTasks (task){
+                const listaDeItemsHtml = task.map((item)=>{
+                  return `<my-todo-item title="${item.title}" checked= ${item.completed ? "checked" : ""} ></my-todo-item> `
+                });
+                const listaEl = div.querySelector(".lista");
+                listaEl.innerHTML = listaDeItemsHtml.join("");
+                console.log(listaEl);
+                state.suscribe(()=>{createTasks(items)});
+                createTasks (items);
+              }
+
+              
            })
            
 

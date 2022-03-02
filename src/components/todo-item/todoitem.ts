@@ -39,7 +39,7 @@ customElements.define(
         render() {
             const trashImage = require("../imagen/delete1.png");
             const div = document.createElement("div")
-            div.innerHTML = `
+            this.shadow.innerHTML = `
             <div class = "root">
                 <div class="custom-text ${this.checked ? "checked" : ""}">
                 ${this.title}
@@ -51,7 +51,6 @@ customElements.define(
                 <img src=${trashImage} alt="">
                 </div>
             </div>`
-            console.log(div.querySelector(".root"))
         ;
         }
     }
