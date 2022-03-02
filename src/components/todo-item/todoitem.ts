@@ -16,10 +16,6 @@ customElements.define(
             
             const style = document.createElement("style");
             style.innerHTML = `
-            .root {
-
-            }
-           
             .checkbox {
                 display: flex;
                 flex-direction: row-reverse;
@@ -30,29 +26,35 @@ customElements.define(
                 text-decoration: 
 
             }
+            .trash-img{
+                display: flex;
+                flex-direction: row-reverse;
+            }
             `;
             this.shadow.appendChild(style);
             this.render();
-
         }
 
+        
         render() {
             const trashImage = require("../imagen/delete1.png");
             const div = document.createElement("div")
-            this.shadow.innerHTML = `
-            <div class = "root">
-                <div class="custom-text ${this.checked ? "checked" : ""}">
-                ${this.title}
-                </div>
-                <div class = "checkbox">
-                <input type= "checkbox" ${this.checked ? "checked" : ""}> 
-                </div>
-                <div class = "trash-img">
-                <img src=${trashImage} alt="">
-                </div>
-            </div>`
-        ;
+            div.innerHTML = `
+            <div class="custom-text ${this.checked ? "checked" : ""}">
+            ${this.title}
+            </div>
+            <div class = "checkbox">
+            <input type= "checkbox" ${this.checked ? "checked" : ""}> 
+            </div>
+            <div class = "trash-img">
+            <img src=${trashImage} alt="">
+            </div>
+            `;
+           this.shadow.appendChild(div);
         }
     }
 )
+            
+        
+        
 

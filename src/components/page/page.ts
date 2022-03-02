@@ -34,7 +34,8 @@ export function initPage(elemento?) {
       font-family: "Roboto";
       font-size: 22px;
       margin-top: 12px;
-  }`
+  }
+  `
   
   div.innerHTML = `
   <header-component>Header</header-component>
@@ -58,7 +59,6 @@ export function initPage(elemento?) {
   createTasks (items);
   
   const butEl = div.querySelector("button");
-  
   butEl.addEventListener("click", (e)=>{
     e.preventDefault();
     const inputEl = div.querySelector("input");

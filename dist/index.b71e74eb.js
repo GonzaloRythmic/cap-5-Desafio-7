@@ -726,10 +726,6 @@ customElements.define("my-todo-item", class extends HTMLElement {
         this.todoId = this.getAttribute("todo-id");
         const style = document.createElement("style");
         style.innerHTML = `
-            .root {
-
-            }
-           
             .checkbox {
                 display: flex;
                 flex-direction: row-reverse;
@@ -740,6 +736,10 @@ customElements.define("my-todo-item", class extends HTMLElement {
                 text-decoration: 
 
             }
+            .trash-img{
+                display: flex;
+                flex-direction: row-reverse;
+            }
             `;
         this.shadow.appendChild(style);
         this.render();
@@ -747,18 +747,18 @@ customElements.define("my-todo-item", class extends HTMLElement {
     render() {
         const trashImage = require("../imagen/delete1.png");
         const div = document.createElement("div");
-        this.shadow.innerHTML = `
-            <div class = "root">
-                <div class="custom-text ${this.checked ? "checked" : ""}">
-                ${this.title}
-                </div>
-                <div class = "checkbox">
-                <input type= "checkbox" ${this.checked ? "checked" : ""}> 
-                </div>
-                <div class = "trash-img">
-                <img src=${trashImage} alt="">
-                </div>
-            </div>`;
+        div.innerHTML = `
+            <div class="custom-text ${this.checked ? "checked" : ""}">
+            ${this.title}
+            </div>
+            <div class = "checkbox">
+            <input type= "checkbox" ${this.checked ? "checked" : ""}> 
+            </div>
+            <div class = "trash-img">
+            <img src=${trashImage} alt="">
+            </div>
+            `;
+        this.shadow.appendChild(div);
     }
 });
 
@@ -808,7 +808,8 @@ function initPage(elemento) {
       font-family: "Roboto";
       font-size: 22px;
       margin-top: 12px;
-  }`;
+  }
+  `;
     div.innerHTML = `
   <header-component>Header</header-component>
   <my-text class = "title" tag ="h1">Mis pendientes</my-text>

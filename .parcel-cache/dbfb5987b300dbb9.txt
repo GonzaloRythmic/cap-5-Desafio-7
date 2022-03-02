@@ -36,7 +36,7 @@
 92C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\es-abstract\2017\GetV.js132875379267300000 0
 107C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\es-abstract\2017\IsGenericDescriptor.js132875379267300000 0
 102C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\core-js\es\array-buffer\is-view.js132880559128099998 0
-59C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\dist132907330663144655 1
+59C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\dist132907381240487529 1
 91C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\svgo\plugins\plugins.js132875378971420000 0
 127C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\source-map-support\node_modules\source-map\lib\array-set.js132875379093280000 0
 128C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\sharp\vendor\8.10.6\include\glib-2.0\gio\gdbusnamewatching.h132612604640000000 0
@@ -195,7 +195,7 @@
 101C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\sharp\node_modules\semver\LICENSE132880559273610000 0
 74C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\ws\lib132880559637882663 1
 94C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\svgo\plugins\removeDesc.js132875378971420000 0
-82C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\src\components\page\page.ts132906502673297795 0
+82C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\src\components\page\page.ts132907377216730052 0
 119C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\sharp\vendor\8.10.6\include\fribidi\fribidi-flags.h132612604640000000 0
 118C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\to-regex\node_modules\define-property\CHANGELOG.md132880559143730000 0
 117C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\@parcel\package-manager\src\NodePackageManager.js132875378874600000 0
@@ -268,7 +268,7 @@
 75C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\brorand132880559596053165 1
 105C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\core-js\modules\esnext.weak-map.of.js132880559128099998 0
 95C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\svgo\plugins\mergeStyles.js132875378971420000 0
-91C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\src\components\todo-item\todoitem.ts132906502394571546 0
+91C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\src\components\todo-item\todoitem.ts132907381239619403 0
 121C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\caniuse-lite\data\features\stricttransportsecurity.js132880559138710000 0
 82C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\src\components\text\text.ts132869320066742518 0
 86C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\is-data-descriptor132880559606125456 1
@@ -10928,7 +10928,7 @@
 86C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\core-js\stable\url132880559647204786 1
 100C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\core-js\stable\url-search-params132880559647344815 1
 91C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\core-js\stable\weak-map132880559647354813 1
-77C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\dist\index.b71e74eb.js132907330663044633 0
+77C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\dist\index.b71e74eb.js132907381240447517 0
 100C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\core-js\stable\weak-set\index.js132880559128099998 0
 100C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\core-js\stable\weak-map\index.js132880559128099998 0
 95C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\core-js\stable\url\index.js132880559128099998 0
@@ -15202,4 +15202,4 @@
 82C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\node_modules\.bin\which.cmd132880586975351987 0
 81C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\dist\delete 1.76bc246b.png132880587155666417 0
 78C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\dist\index.61d3354a.css132905620859533422 0
-81C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\dist\index.b71e74eb.js.map132907330663124652 0
+81C:\Users\Gonzalo Rythmic\APX\Modulo_V\cap-7-webstorage\dist\index.b71e74eb.js.map132907381240477520 0
