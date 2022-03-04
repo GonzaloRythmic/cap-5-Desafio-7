@@ -50,7 +50,7 @@ export function initPage(elemento?) {
 
   function createTasks (task){
     const listaDeItemsHtml = task.map((item)=>{
-      return `<my-todo-item title="${item.title}" checked= ${item.completed ? "checked" : ""} ></my-todo-item> `});
+      return `<my-todo-item title="${item.title}" checked= ${item.checked ? "checked" : ""} ></my-todo-item> `});
       const listaEl = div.querySelector(".lista");
       listaEl.innerHTML = listaDeItemsHtml.join("");
     }

@@ -733,7 +733,7 @@ customElements.define("my-todo-item", class extends HTMLElement {
             .custom-text.checked{
                 font-family: "Roboto";
                 font-size: 18px;
-                text-decoration: 
+                text-decoration: line-through;
 
             }
             .trash-img{
@@ -758,6 +758,8 @@ customElements.define("my-todo-item", class extends HTMLElement {
             <img src=${trashImage} alt="">
             </div>
             `;
+        const checkboxEl = div.querySelector(".checkbox");
+        console.log(checkboxEl);
         this.shadow.appendChild(div);
     }
 });
@@ -821,7 +823,7 @@ function initPage(elemento) {
     div.appendChild(style);
     function createTasks(task) {
         const listaDeItemsHtml = task.map((item)=>{
-            return `<my-todo-item title="${item.title}" checked= ${item.completed ? "checked" : ""} ></my-todo-item> `;
+            return `<my-todo-item title="${item.title}" checked= ${item.checked ? "checked" : ""} ></my-todo-item> `;
         });
         const listaEl = div.querySelector(".lista");
         listaEl.innerHTML = listaDeItemsHtml.join("");

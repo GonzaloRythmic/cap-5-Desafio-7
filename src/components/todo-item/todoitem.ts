@@ -23,7 +23,7 @@ customElements.define(
             .custom-text.checked{
                 font-family: "Roboto";
                 font-size: 18px;
-                text-decoration: 
+                text-decoration: line-through;
 
             }
             .trash-img{
@@ -50,6 +50,8 @@ customElements.define(
             <img src=${trashImage} alt="">
             </div>
             `;
+            const checkboxEl = div.querySelector(".checkbox");
+            console.log(checkboxEl);
            this.shadow.appendChild(div);
         }
     }
