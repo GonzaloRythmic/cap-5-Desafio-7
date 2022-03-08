@@ -717,12 +717,13 @@ exports.getOrigin = getOrigin;
 customElements.define("my-todo-item", class extends HTMLElement {
     constructor(){
         super();
-        this.checked = false;
         this.shadow = this.attachShadow({
             mode: "open"
         });
+    }
+    conecetedCallback() {
         this.title = this.getAttribute("title") || "";
-        this.checked = this.hasAttribute("checked");
+        this.checked = this.getAttribute("checked");
         this.todoId = this.getAttribute("todo-id");
         const style = document.createElement("style");
         style.innerHTML = `
@@ -730,36 +731,59 @@ customElements.define("my-todo-item", class extends HTMLElement {
                 display: flex;
                 flex-direction: row-reverse;
             }
-            .custom-text.checked{
+            .custom-text{
                 font-family: "Roboto";
                 font-size: 18px;
-                text-decoration: line-through;
-
+                
+    
             }
             .trash-img{
                 display: flex;
                 flex-direction: row-reverse;
             }
+            .checkbox-el{
+    
+            }
+            .todo-item{
+                display: grid;
+                grid-template: 1fr / minmax(0, 1fr) 25px;
+                column-gap: 7.5px;
+                margin-top: 30px;
+            }
             `;
         this.shadow.appendChild(style);
         this.render();
+    }
+    addCallbacks() {
+        const checkboxEl = this.shadow.querySelector(".checkbox-el  ");
+        checkboxEl.addEventListener("click", (e)=>{
+            const target = e.target;
+            console.log(target.checked);
+        // this.checked = true;
+        // if (target.checked = true ){
+        //     const t = div.querySelector(".custom-text");
+        //     console.log(t);
+        // }
+        });
     }
     render() {
         const trashImage = require("../imagen/delete1.png");
         const div = document.createElement("div");
         div.innerHTML = `
-            <div class="custom-text ${this.checked ? "checked" : ""}">
-            ${this.title}
-            </div>
-            <div class = "checkbox">
-            <input type= "checkbox" ${this.checked ? "checked" : ""}> 
-            </div>
-            <div class = "trash-img">
-            <img src=${trashImage} alt="">
+            <div class = "todo-item">
+                <div class="custom-text ${this.checked ? "checked" : ""}">
+                ${this.title}
+                </div>
+                <div class = "interactive-container">
+                    <div class = "checkbox">
+                        <input class = "checkbox-el" type= "checkbox" ${this.checked ? "checked" : ""}> 
+                    </div>
+                    <div class = "trash-img">
+                        <img src=${trashImage} alt="">
+                    </div>
+                </div>
             </div>
             `;
-        const checkboxEl = div.querySelector(".checkbox");
-        console.log(checkboxEl);
         this.shadow.appendChild(div);
     }
 });
@@ -782,7 +806,6 @@ parcelHelpers.export(exports, "initPage", ()=>initPage
 var _state = require("../../state");
 function initPage(elemento) {
     const div = document.createElement("div");
-    const items = _state.state.getActiveTasks();
     const style = document.createElement("style");
     style.innerHTML = `
   *{
@@ -820,14 +843,18 @@ function initPage(elemento) {
   <button class = "button">Agregar</button>
   <ul class="lista"></ul>
   `;
+    const listaEl = div.querySelector(".lista");
     div.appendChild(style);
     function createTasks(task) {
-        const listaDeItemsHtml = task.map((item)=>{
-            return `<my-todo-item title="${item.title}" checked= ${item.checked ? "checked" : ""} ></my-todo-item> `;
-        });
-        const listaEl = div.querySelector(".lista");
-        listaEl.innerHTML = listaDeItemsHtml.join("");
+        listaEl.innerHTML = "";
+        for (const iterator of task){
+            const todoItemEl = document.createElement("todo-item");
+            todoItemEl.setAttribute("title", iterator.title);
+            if (iterator.completed) todoItemEl.setAttribute("checked", "true");
+            listaEl.appendChild(todoItemEl);
+        }
     }
+    const items = _state.state.getActiveTasks();
     _state.state.suscribe(()=>{
         createTasks(_state.state.getActiveTasks());
     });
@@ -858,14 +885,17 @@ const state = {
     data: {
         tasks: [
             {
+                id: 1,
                 title: "Tarea 1",
                 completed: true
             },
             {
+                is: 2,
                 title: "Tarea 2",
                 completed: false
             },
             {
+                id: 3,
                 title: "Tarea 3",
                 completed: false,
                 deleted: true

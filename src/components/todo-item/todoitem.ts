@@ -4,14 +4,18 @@ customElements.define(
     class extends HTMLElement {
         shadow: ShadowRoot;
         title: string;
-        checked: boolean = false;
+        checked: boolean | string;
         todoId: string;
+        completed: boolean | string;
 
         constructor() {
             super();
             this.shadow = this.attachShadow({mode: "open"});
+        }
+        
+        conecetedCallback () {
             this.title = this.getAttribute("title") || "";
-            this.checked = this.hasAttribute("checked");
+            this.checked = this.getAttribute("checked");
             this.todoId = this.getAttribute("todo-id");
             
             const style = document.createElement("style");
@@ -20,19 +24,44 @@ customElements.define(
                 display: flex;
                 flex-direction: row-reverse;
             }
-            .custom-text.checked{
+            .custom-text{
                 font-family: "Roboto";
                 font-size: 18px;
-                text-decoration: line-through;
-
+                
+    
             }
             .trash-img{
                 display: flex;
                 flex-direction: row-reverse;
             }
+            .checkbox-el{
+    
+            }
+            .todo-item{
+                display: grid;
+                grid-template: 1fr / minmax(0, 1fr) 25px;
+                column-gap: 7.5px;
+                margin-top: 30px;
+            }
             `;
             this.shadow.appendChild(style);
             this.render();
+
+        }
+
+        addCallbacks() {
+            const checkboxEl = this.shadow.querySelector(".checkbox-el  ");
+            checkboxEl.addEventListener("click", (e)=>{ 
+                const target = e.target as any;
+                console.log(target.checked);
+                // this.checked = true;
+                // if (target.checked = true ){
+                //     const t = div.querySelector(".custom-text");
+                //     console.log(t);
+                // }
+    
+            })
+
         }
 
         
@@ -40,18 +69,20 @@ customElements.define(
             const trashImage = require("../imagen/delete1.png");
             const div = document.createElement("div")
             div.innerHTML = `
-            <div class="custom-text ${this.checked ? "checked" : ""}">
-            ${this.title}
-            </div>
-            <div class = "checkbox">
-            <input type= "checkbox" ${this.checked ? "checked" : ""}> 
-            </div>
-            <div class = "trash-img">
-            <img src=${trashImage} alt="">
+            <div class = "todo-item">
+                <div class="custom-text ${this.checked ? "checked" : ""}">
+                ${this.title}
+                </div>
+                <div class = "interactive-container">
+                    <div class = "checkbox">
+                        <input class = "checkbox-el" type= "checkbox" ${this.checked ? "checked" : ""}> 
+                    </div>
+                    <div class = "trash-img">
+                        <img src=${trashImage} alt="">
+                    </div>
+                </div>
             </div>
             `;
-            const checkboxEl = div.querySelector(".checkbox");
-            console.log(checkboxEl);
            this.shadow.appendChild(div);
         }
     }

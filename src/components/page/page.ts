@@ -4,9 +4,6 @@ import { state } from "../../state";
 
 export function initPage(elemento?) {
   const div = document.createElement ("div");
-
-  const items = state.getActiveTasks();
-
   const style = document.createElement("style");
   style.innerHTML = `
   *{
@@ -46,14 +43,23 @@ export function initPage(elemento?) {
   <ul class="lista"></ul>
   `;
  
+  const listaEl = div.querySelector(".lista");
   div.appendChild(style);
 
   function createTasks (task){
-    const listaDeItemsHtml = task.map((item)=>{
-      return `<my-todo-item title="${item.title}" checked= ${item.checked ? "checked" : ""} ></my-todo-item> `});
-      const listaEl = div.querySelector(".lista");
-      listaEl.innerHTML = listaDeItemsHtml.join("");
-    }
+      listaEl.innerHTML = "";
+      for (const iterator of task) {
+        const todoItemEl = document.createElement("todo-item");
+        todoItemEl.setAttribute("title",iterator.title);
+        if (iterator.completed){
+          todoItemEl.setAttribute("checked", "true");
+        }
+        listaEl.appendChild(todoItemEl);
+      }
+  }
+      
+
+  const items = state.getActiveTasks();
 
   state.suscribe(()=>{createTasks(state.getActiveTasks())});
   createTasks (items);

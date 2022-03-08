@@ -1,8 +1,8 @@
 const state = {
     data: {
-        tasks:[ {title: "Tarea 1" , completed: true },
-                {title: "Tarea 2" , completed: false },
-                {title: "Tarea 3" , completed: false,  deleted: true }
+        tasks:[ {id: 1, title: "Tarea 1" , completed: true },
+                {is: 2, title: "Tarea 2" , completed: false },
+                {id:3 , title: "Tarea 3" , completed: false,  deleted: true }
         ],
     },
     listener: [], 
