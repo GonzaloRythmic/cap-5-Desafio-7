@@ -44,14 +44,18 @@ export function initPage(elemento?) {
   `;
  
   const listaEl = div.querySelector(".lista");
+  console.log(listaEl)
   div.appendChild(style);
 
   function createTasks (task){
       listaEl.innerHTML = "";
-      for (const iterator of task) {
+      const enableTasks = state.getActiveTasks();
+      for (const t of enableTasks) {
+        console.log(t)
         const todoItemEl = document.createElement("todo-item");
-        todoItemEl.setAttribute("title",iterator.title);
-        if (iterator.completed){
+        todoItemEl.setAttribute("title",t.title);
+        todoItemEl.setAttribute("completed", "false");
+        if (t.completed){
           todoItemEl.setAttribute("checked", "true");
         }
         listaEl.appendChild(todoItemEl);
@@ -69,7 +73,7 @@ export function initPage(elemento?) {
     e.preventDefault();
     const inputEl = div.querySelector("input");
     const value = inputEl.value;
-    state.addItem(value + Math.random())
+    state.addTask(value)
   });
       
 return div;

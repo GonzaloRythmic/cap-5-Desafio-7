@@ -1,6 +1,7 @@
+import { state } from "../../state";
 
 customElements.define(
-    "my-todo-item", 
+    "todo-item", 
     class extends HTMLElement {
         shadow: ShadowRoot;
         title: string;
@@ -11,12 +12,14 @@ customElements.define(
         constructor() {
             super();
             this.shadow = this.attachShadow({mode: "open"});
+            this.render();
         }
         
         conecetedCallback () {
             this.title = this.getAttribute("title") || "";
-            this.checked = this.getAttribute("checked");
+            this.checked = JSON.parse(this.getAttribute("checked"));
             this.todoId = this.getAttribute("todo-id");
+            this.completed = this.getAttribute("completed");
             
             const style = document.createElement("style");
             style.innerHTML = `
@@ -44,8 +47,8 @@ customElements.define(
                 margin-top: 30px;
             }
             `;
-            this.shadow.appendChild(style);
             this.render();
+            this.shadow.appendChild(style);
 
         }
 
@@ -53,13 +56,8 @@ customElements.define(
             const checkboxEl = this.shadow.querySelector(".checkbox-el  ");
             checkboxEl.addEventListener("click", (e)=>{ 
                 const target = e.target as any;
-                console.log(target.checked);
-                // this.checked = true;
-                // if (target.checked = true ){
-                //     const t = div.querySelector(".custom-text");
-                //     console.log(t);
-                // }
-    
+                console.log(target)
+                // state.changeState()
             })
 
         }
@@ -69,9 +67,9 @@ customElements.define(
             const trashImage = require("../imagen/delete1.png");
             const div = document.createElement("div")
             div.innerHTML = `
-            <div class = "todo-item">
+            <div class = "todo-item" completed = "false">
                 <div class="custom-text ${this.checked ? "checked" : ""}">
-                ${this.title}
+                    ${this.title}
                 </div>
                 <div class = "interactive-container">
                     <div class = "checkbox">
@@ -83,7 +81,9 @@ customElements.define(
                 </div>
             </div>
             `;
-           this.shadow.appendChild(div);
+            this.shadow.appendChild(div);
+            this.addCallbacks();
+            console.log(this.checked)
         }
     }
 )

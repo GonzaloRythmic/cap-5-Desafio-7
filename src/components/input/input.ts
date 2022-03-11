@@ -50,22 +50,23 @@ export function formInput () {
                e.preventDefault();
                const inputEl = shadow.querySelector("input");
                const value = inputEl.value;
-               state.addItem(value + Math.random());
+               state.addTask(value);
+               console.log(value)
 
                const items = state.getActiveTasks();
                function createTasks (task){
-                const listaDeItemsHtml = task.map((item)=>{
-                  return `<my-todo-item title="${item.title}" checked= ${item.completed ? "checked" : ""} ></my-todo-item> `
-                });
-                const listaEl = div.querySelector(".lista");
-                listaEl.innerHTML = listaDeItemsHtml.join("");
-                console.log(listaEl);
-                state.suscribe(()=>{createTasks(items)});
-                createTasks (items);
-              }
-
-              
-           })
+                    const listaDeItemsHtml = task.map((item)=>{
+                        return `<my-todo-item title="${item.title}" checked= ${item.completed ? "checked" : ""} ></my-todo-item> `
+                    });
+                    const listaEl = div.querySelector(".lista");
+                    listaEl.innerHTML = listaDeItemsHtml.join("");
+                    console.log(listaEl);
+                    state.suscribe(()=>{
+                        createTasks(items)
+                    });
+                    createTasks (items);
+                }
+            })
            
 
         }
